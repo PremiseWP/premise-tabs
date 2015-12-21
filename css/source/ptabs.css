@@ -1,0 +1,67 @@
+/**
+ * Front end CSS Styling
+ *
+ * @package Premise Tabs
+ */
+
+.premise-tabs {
+	position: relative;
+	min-height: 200px; /* Dinamically set, see JS */
+	list-style: none;
+	margin: 22px 0;
+}
+
+.premise-tab {
+	float: left;
+	margin: 0;
+}
+
+.premise-tab-label {
+	background: #32373C;
+	color: #fff;
+	/*display: block;*/ /* deactivate for block tabs */
+	padding: 20px;
+	/*border: 1px solid #ccc;*/
+	position: relative;
+	left: 0;
+	top: 0;
+	cursor: pointer;
+	text-align: center;
+}
+
+.premise-tab .premise-tab-radio {
+	display: none;
+}
+
+.premise-tab-content {
+	/*position: absolute;
+	top: 34px;
+	left: 0;
+	background: #fff;
+	right: 0;
+	bottom: 0;
+	padding: 10px;
+	border: 1px solid #ccc;
+	overflow-y: scroll;*/
+	display: none;
+	width: 100%;
+	position: absolute;
+	top: 45px; /* Dinamically set, see JS */
+	left: 0;
+	padding: 20px;
+	background: #fff;
+}
+
+.premise-tab-radio:checked ~ .premise-tab-label {
+	background: #23282D;
+}
+
+.premise-tab-radio:checked ~ .premise-tab-content {
+	display: block;
+}
+
+/* Responsive Tabs */
+/* Below 768px: reduce tab size by 2 */
+@media screen and (max-width:767px) {
+
+}
