@@ -26,7 +26,9 @@ class Premise_Tabs {
 	 * @var array
 	 */
 	var $defaults = array(
-		'tabs-label-display' => 'inline'
+		'tabs-label-display' => 'inline', // Options: 'block'.
+		'transition' => 'none', // Options: 'opacity'|'translateX'.
+		'selected-tab-arrow' => false, // Options: true|false.
 	);
 
 
@@ -201,13 +203,17 @@ class Premise_Tabs {
 
 		$number_tabs = count( $this->tab );
 
-		$block = $this->options['tabs-label-display'] === 'block';
+		$block = $this->options['tabs-label-display'] === 'block' ? ' premise-block' : '';
+
+		$transition = $this->options['transition'];
+
+		$arrow = $this->options['selected-tab-arrow'] ? ' premise-tab-arrow' : '';
 
 		ob_start(); ?>
 
 		<li class="premise-tab"<?php echo $block ? ' style="width: ' . esc_attr( 100 / $number_tabs ) . '%"' : ''; ?>>
 			<input type="radio"<?php echo esc_attr( $checked ); ?> name="premise-tab-group-<?php echo sanitize_html_class( $this->tab_group ); ?>" id="premise-tab<?php echo esc_attr( $tab_number ); ?>" class="premise-tab-radio">
-			<label for="premise-tab<?php echo esc_attr( $tab_number ); ?>" class="premise-tab-label"<?php echo $block ? ' style="display: block;"' : ''; ?>>
+			<label for="premise-tab<?php echo esc_attr( $tab_number ); ?>" class="premise-tab-label<?php echo wp_kses_data( $block . $arrow ); ?>">
 			<?php if ( strpos( $tab['icon'], 'fa-' ) === 0 ) : ?>
 				<i class="fa <?php echo esc_attr( $tab['icon'] ); ?>"></i>
 			<?php elseif ( $tab['icon'] ) : // Image src. ?>
@@ -216,7 +222,7 @@ class Premise_Tabs {
 				<?php echo esc_html( $tab['title'] ); ?>
 			</label>
 
-			<div id="premise-tab-content<?php echo esc_attr( $tab_number ); ?>" class="premise-tab-content">
+			<div id="premise-tab-content<?php echo esc_attr( $tab_number ); ?>" class="premise-tab-content <?php echo wp_kses_data( $transition ); ?>">
 
 		<?php return ob_get_clean();
 	}

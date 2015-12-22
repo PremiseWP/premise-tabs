@@ -7,7 +7,7 @@ Example:
 
 ```php
 
-$tabs = new Premise_Tabs( array( 'tabs-label-display' => 'block' ) );
+$tabs = new Premise_Tabs();
 
 ob_start();
 
@@ -20,6 +20,19 @@ $tabs->set_tab(
 );
 
 $tabs->tabs_output();
+
+```
+
+Options:
+
+```php
+
+// Defaults.
+array(
+	'tabs-label-display' => 'inline', // Options: 'inline'|'block'.
+	'transition' => '', // Options: 'opacity'|'translateX'.
+	'selected-tab-arrow' => false, // Options: true|false.
+)
 
 ```
 

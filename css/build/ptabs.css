@@ -43,22 +43,64 @@
 	padding: 10px;
 	border: 1px solid #ccc;
 	overflow-y: scroll;*/
-	display: none;
+	display: block;
 	width: 100%;
 	position: absolute;
 	top: 45px; /* Dinamically set, see JS */
 	left: 0;
 	padding: 20px;
 	background: #fff;
+	overflow: hidden;
+	height: 0;
+	opacity: 0;
 }
 
 .premise-tab-radio:checked ~ .premise-tab-label {
 	background: #23282D;
 }
 
-.premise-tab-radio:checked ~ .premise-tab-content {
-	display: block;
+/* Selected tab arrow */
+.premise-tab-radio:checked ~ .premise-tab-arrow:after {
+	position: absolute;
+	bottom: 0;
+	left: 47%;
+	left: calc( 50% - 16px );
+	content: '';
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 16px 16px 16px;
+	border-color: transparent transparent #fff transparent;
 }
+
+.premise-tab-radio:checked ~ .premise-tab-content {
+	overflow: visible;
+	height: auto;
+	opacity: 1;
+}
+
+/* Transitions */
+.premise-tab-radio ~ .premise-tab-content.opacity > * {
+	opacity: 0;
+}
+
+.premise-tab-radio:checked ~ .premise-tab-content.opacity > * {
+	opacity: 1;
+	transition: opacity 1s ease;
+}
+
+.premise-tab-radio ~ .premise-tab-content.translateX > * {
+	-webkit-transform: translateX(-100%);
+	        transform: translateX(-100%);
+}
+
+.premise-tab-radio:checked ~ .premise-tab-content.translateX > * {
+	-webkit-transform: translateX(0);
+	        transform: translateX(0);
+	transition: -webkit-transform 1s ease;
+	transition: transform 1s ease;
+}
+
 
 /* Responsive Tabs */
 /* Below 768px: reduce tab size by 2 */
