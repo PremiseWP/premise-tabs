@@ -100,7 +100,20 @@
 
 
 /* Responsive Tabs */
-/* Below 768px: reduce tab size by 2 */
 @media screen and (max-width:767px) {
+
+	/* Tabs 100% width */
+	.premise-tab {
+		width: 100% !important;
+	}
+
+	.premise-tab-label {
+		display: block;
+	}
+
+	/* Remove selected tab arrow */
+	/*.premise-tab-radio:checked ~ .premise-tab-arrow:after {
+		border: 0;
+	}*/
 
 }

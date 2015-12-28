@@ -7,16 +7,27 @@
 
 	// OnLoad.
 	$(function() {
-		PremiseTabsHeight();
+		PremiseTabsHeight( false );
 
-		$( '.premise-tab-radio' ).click( function() { PremiseTabsHeight(); } );
+		$( '.premise-tab-radio' ).click( function() { PremiseTabsHeight( false ); } );
 	});
 
-	function PremiseTabsHeight() {
+	// On resize.
+	$( window ).resize(function() {
+		PremiseTabsHeight( true );
+	});
 
-		if ( typeof PremiseTabsHeight.tabsheight == 'undefined' ) {
+	function PremiseTabsHeight( resize ) {
+
+		if ( typeof PremiseTabsHeight.tabsheight == 'undefined' || resize ) {
 
 			PremiseTabsHeight.tabsheight = $( '.premise-tab-label' ).outerHeight(); // Static var.
+
+			// Tabs 100% width
+			if ( screen.width < 768 ) {
+
+				PremiseTabsHeight.tabsheight *= $( '.premise-tab-label' ).length;
+			}
 
 			var tabcontenttop = PremiseTabsHeight.tabsheight;
 
