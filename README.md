@@ -1,6 +1,6 @@
 # Premise Tabs plugin
 
-Easily add CSS tabs to your themes or plugins options page.
+Easily add Responsive CSS tabs to your theme or plugin options page.
 Wordpress plugin for [PremiseWP](https://github.com/PremiseWP/Premise-WP) framework.
 
 Example:

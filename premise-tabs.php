@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Premise Tabs
- * Description: CSS Tabs. Premise-WP add-on.
+ * Description: Responsive CSS Tabs. Premise-WP add-on.
  * Plugin URI:
  * Version:     1.0
  * Author:      Vallgroup LLC
