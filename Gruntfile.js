@@ -73,6 +73,15 @@ module.exports = function(grunt) {
 			}
 		},
 		
+		phpdocumentor: {
+			dist: {
+				options: {
+					directory : './',
+					target : 'documentation',
+					template: 'responsive-twig'
+				}
+			}
+		},
 	});
 
 	// Load the plugin that provides the "uglify" task.
@@ -80,6 +89,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	// create PHP documentation
+	grunt.loadNpmTasks('grunt-phpdocumentor');
 
 	// Default task(s).
 	grunt.registerTask( 'default', ['watch'] );
