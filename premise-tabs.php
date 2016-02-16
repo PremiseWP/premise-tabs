@@ -6,7 +6,7 @@
  * Version:     1.0
  * Author:      Vallgroup LLC
  * Author URI:  http://vallgroup.com
- * License:     see LICENSE file
+ * License:     GPL
  *
  * @package Premise Tabs
  */
