@@ -48,7 +48,7 @@
 	position: absolute;
 	top: 45px; /* Dinamically set, see JS */
 	left: 0;
-	padding: 20px;
+	padding: 0;
 	background: #fff;
 	overflow: hidden;
 	height: 0;
@@ -76,6 +76,7 @@
 .premise-tab-radio:checked ~ .premise-tab-content {
 	overflow: visible;
 	height: auto;
+	padding: 20px;
 	opacity: 1;
 }
 
