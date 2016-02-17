@@ -35,7 +35,7 @@ class Premise_Tabs {
 	 *
 	 * @var array
 	 */
-	var $defaults = array(
+	protected $defaults = array(
 		'title' => '', 
 		'icon' => '', 
 		'content' => '', 
@@ -55,7 +55,14 @@ class Premise_Tabs {
 	 *
 	 * @var array
 	 */
-	var $options = 'top';
+	protected $options = array('wall' => 'top');
+
+
+
+	protected $options_defaults = array(
+		'wall' => 'top',
+
+	);
 
 
 	/**
@@ -63,7 +70,11 @@ class Premise_Tabs {
 	 *
 	 * @var array
 	 */
-	var $tabs = array();
+	protected $tabs = array();
+
+
+
+	public $raw = false;
 
 
 	/**
@@ -79,27 +90,29 @@ class Premise_Tabs {
 	 *
 	 * @param array $options Tabs options.
 	 */
-	public function __construct( $tabs = array(), $params = '' ) {
+	public function __construct( $tabs = array(), $params = '', $raw = false ) {
 
 		if ( is_array( $tabs ) && ! empty( $tabs ) ) {
+			// check raw feature
+			$this->raw = is_bool( $raw ) ? $raw : $this->raw;
+
 			// save tabs into our object's tabs property
 			foreach ( $tabs as $k => $tab ) {
 				if ( is_array( $tab ) ) $this->tabs[] = wp_parse_args( $tab, $this->defaults );
 			}
 
-			if ( is_string( $params ) && ! empty( $params ) ) {
-				$this->options = $params;
-			}
-			elseif ( is_array( $params ) ) {
-				# parse params
-				echo '$params - is an array. Not supported yet.';
-			}
+			$this->set_options( $params );
 			
 			$this->load_tabs();
 		}
 	}
 
 
+	/**
+	 * loads the tabs
+	 * 
+	 * @return string outputs the html for the tabs
+	 */
 	public function load_tabs() {
 
 		$_html = $this->tabs_independent();
@@ -126,16 +139,23 @@ class Premise_Tabs {
 			if ( ( isset( $tab['title'] ) && ! empty( $tab['title'] ) ) 
 				&& ( isset( $tab['content'] ) && ! empty( $tab['content'] ) ) ) {
 				
+				$tab_class = ( isset( $tab['tab_class'] ) && ! empty( $tab['tab_class'] ) ) ? 
+					' ' . esc_attr( $tab['tab_class'] ) : '';
+				
 				// Build the tabs 
-				$_tabs .= '<div class="ptabs-tab ptabs-tab-' . $k . '" data-tab-index="' . $k . '">
+				$_tabs .= '<div class="ptabs-tab ptabs-tab-' . $k . $tab_class . '" data-tab-index="' . $k . '">
 					<a href="javascript:;" class="ptabs-tab-a">';
-						$_tabs .= ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) ? $this->get_icon( $tab['icon'] ) : ''; // get icon whether is image or FA
+						// get icon whether is image or FA
+						$_tabs .= ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) ? $this->get_icon( $tab['icon'] ) : '';
 						$_tabs .= '<div class="ptabs-tab-title">' . $this->stripped_title( $tab['title'] ) . '</div>';
 					$_tabs .= '</a>
 				</div>';
 
+				$cont_class = ( isset( $tab['content_class'] ) && ! empty( $tab['content_class'] ) ) ? 
+					' ' . esc_attr( $tab['content_class'] ) : '';
+
 				// Build the content 
-				$_cont .= '<div class="ptabs-content ptabs-content-' . $k . '">';
+				$_cont .= '<div class="ptabs-content ptabs-content-' . $k . $cont_class . '">';
 					$_cont .= $tab['content'];
 				$_cont .= '</div>';
 			}
@@ -144,7 +164,24 @@ class Premise_Tabs {
 		$_tabs .= '</div>';
 		$_cont .= '</div>';
 
-		return $_html = '<div class="ptabs-wrapper">' . $_tabs . $_cont . '</div>';
+		// $_html = '<div class="' . $this->wrapper_class() . '">' . $_tabs . $_cont . '</div>'
+
+		return $_html = '<div class="' . $this->wrapper_class() . '">' . $_tabs . $_cont . '</div>';
+	}
+
+
+	/**
+	 * returns all the wrapper classes
+	 * 
+	 * @return string wrapper applicable classes
+	 */
+	public function wrapper_class() {
+		// begin with the main class if not raw
+		$class = $this->raw ? '' : 'ptabs-wrapper';
+
+		$class .= isset( $this->options['wall'] ) && ! empty( $this->options['wall'] ) ? ' ' . 'ptabs-' . esc_attr( $this->options['wall'] ) : '';
+
+		return $class;
 	}
 
 
@@ -192,6 +229,18 @@ class Premise_Tabs {
 		if ( ! empty( $title ) )
 			return strip_tags( (string) $title, $this->allowed_title_tags );
 		return '';
+	}
+
+
+
+
+	public function set_options( $params = '' ) {
+		if ( is_string( $params ) && ! empty( $params ) ) {
+			$this->options['wall'] = $params;
+		}
+		elseif ( is_array( $params ) ) {
+			$this->options = wp_parse_args( $params, $this->options_defaults );
+		}
 	}
 
 
