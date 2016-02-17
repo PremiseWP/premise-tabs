@@ -4,11 +4,19 @@
  * @package Premise Tabs
  */
 
+/**
+ * The main class '.ptabs-wrapper'
+ *
+ * We scope everything in our css to this class
+ * this allows the feature 'raw' to work well because
+ * the html thet is output by Premise Tabs is unaffected
+ * since it does not include this class.
+ */
 .ptabs-wrapper {
 	display: block;
 }
 
-.ptabs-tabs-container {
+.ptabs-wrapper .ptabs-tabs-container {
 	position: relative;
 	z-index: 2;
 	display: block;
@@ -20,69 +28,65 @@
 }
 
 /**
- * The Tab (Default Style)
+ * The Tabs (Default Style)
  */
-.ptabs-tab {
+.ptabs-wrapper .ptabs-tab {
 	display: inline-block;
-	border-right: 1px solid #888;
-	border-top: 1px solid #888;
-	border-bottom: 0;
 }
-
-.ptabs-tab:first-child {
-	border-left: 1px solid #888;
-	border-top-left-radius: 6px;
-}
-
-.ptabs-tab:last-child {
-	border-top-right-radius: 6px;
-}
-
-.ptabs-tab.ptabs-active,
-.ptabs-tab:hover {
+.ptabs-wrapper .ptabs-tab.ptabs-active,
+.ptabs-wrapper .ptabs-tab-a:focus, 
+.ptabs-wrapper .ptabs-tab:hover {
 	background: #fff;
-	color: #444;
+	color: inherit;
+	box-shadow: none; /* prevent default WP animation */
 }
-
-.ptabs-tab-title,
-.ptabs-tab-icon {
+.ptabs-wrapper .ptabs-tab-title,
+.ptabs-wrapper .ptabs-tab-icon {
 	display: inline-block;
 	vertical-align: middle;
 	line-height: 1;
 	margin-left: 10px;
 }
-
-.ptabs-tab-title {
+.ptabs-wrapper .ptabs-tab-title {
 	margin-right: 10px;
 }
-
-.ptabs-tab-a {
+.ptabs-wrapper .ptabs-tab-a {
 	display: block;
 	padding: 10px 0;
 	color: inherit;
 	outline: 0;
 }
-/* prevent default WP animation */
-.ptabs-tab-a:active, 
-.ptabs-tab-a:hover {
-	color: inherit;
+
+/* Top */
+.ptabs-wrapper.ptabs-top .ptabs-tab {
+	border-right: 1px solid #888;
+	border-top: 1px solid #888;
+	border-bottom: 0;
 }
-.ptabs-tab-a:focus {
-	box-shadow: none;
+
+.ptabs-wrapper.ptabs-top .ptabs-tab:first-child {
+	border-left: 1px solid #888;
+	border-top-left-radius: 6px;
 }
+
+.ptabs-wrapper.ptabs-top .ptabs-tab:last-child {
+	border-top-right-radius: 6px;
+}
+
+
 
 
 /**
  * The Content (Default Style)
  */
-.ptabs-content-container {
+.ptabs-wrapper .ptabs-content-container {
 	position: relative;
 	z-index: 1;
 	min-height: 400px;
 	border-top: 0;
 }
 
-.ptabs-content {
+.ptabs-wrapper .ptabs-content {
 	padding: 20px;
 	position: absolute;
 	top: 0;
@@ -94,7 +98,7 @@
 	opacity: 0;
 }
 
-.ptabs-content.ptabs-active {
+.ptabs-wrapper .ptabs-content.ptabs-active {
 	opacity: 1;
 }
 
