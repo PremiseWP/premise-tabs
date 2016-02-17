@@ -4,120 +4,113 @@
  * @package Premise Tabs
  */
 
-.premise-tabs {
+.ptabs-wrapper {
+	display: block;
+}
+
+.ptabs-tabs-container {
 	position: relative;
-	min-height: 200px; /* Dinamically set, see JS */
-	list-style: none;
-	margin: 22px 0;
-}
-
-.premise-tab {
-	float: left;
-	margin: 0;
-}
-
-.premise-tab-label {
-	background: #32373C;
-	color: #fff;
-	/*display: block;*/ /* deactivate for block tabs */
-	padding: 20px;
-	/*border: 1px solid #ccc;*/
-	position: relative;
-	left: 0;
-	top: 0;
-	cursor: pointer;
-	text-align: center;
-}
-
-.premise-tab .premise-tab-radio {
-	display: none;
-}
-
-.premise-tab-content {
-	/*position: absolute;
-	top: 34px;
-	left: 0;
-	background: #fff;
-	right: 0;
-	bottom: 0;
-	padding: 10px;
-	border: 1px solid #ccc;
-	overflow-y: scroll;*/
+	z-index: 2;
 	display: block;
 	width: 100%;
-	position: absolute;
-	top: 45px; /* Dinamically set, see JS */
-	left: 0;
-	padding: 0;
+	white-space: nowrap;
+	overflow-x: auto;
+	border-bottom: 1px solid #888;
+	padding: 20px 10px 0;
+}
+
+/**
+ * The Tab (Default Style)
+ */
+.ptabs-tab {
+	display: inline-block;
+	border-right: 1px solid #888;
+	border-top: 1px solid #888;
+	border-bottom: 0;
+}
+
+.ptabs-tab:first-child {
+	border-left: 1px solid #888;
+	border-top-left-radius: 6px;
+}
+
+.ptabs-tab:last-child {
+	border-top-right-radius: 6px;
+}
+
+.ptabs-tab.ptabs-active,
+.ptabs-tab:hover {
 	background: #fff;
-	overflow: hidden;
-	height: 0;
-	opacity: 0;
+	color: #444;
 }
 
-.premise-tab-radio:checked ~ .premise-tab-label {
-	background: #23282D;
+.ptabs-tab-title,
+.ptabs-tab-icon {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 1;
+	margin-left: 10px;
 }
 
-/* Selected tab arrow */
-.premise-tab-radio:checked ~ .premise-tab-arrow:after {
-	position: absolute;
-	bottom: 0;
-	left: 47%;
-	left: calc( 50% - 16px );
-	content: '';
-	width: 0;
-	height: 0;
-	border-style: solid;
-	border-width: 0 16px 16px 16px;
-	border-color: transparent transparent #fff transparent;
+.ptabs-tab-title {
+	margin-right: 10px;
 }
 
-.premise-tab-radio:checked ~ .premise-tab-content {
-	overflow: visible;
-	height: auto;
+.ptabs-tab-a {
+	display: block;
+	padding: 10px 0;
+	color: inherit;
+	outline: 0;
+}
+/* prevent default WP animation */
+.ptabs-tab-a:active, 
+.ptabs-tab-a:hover {
+	color: inherit;
+}
+.ptabs-tab-a:focus {
+	box-shadow: none;
+}
+
+
+/**
+ * The Content (Default Style)
+ */
+.ptabs-content-container {
+	position: relative;
+	z-index: 1;
+	min-height: 400px;
+	border-top: 0;
+}
+
+.ptabs-content {
 	padding: 20px;
-	opacity: 1;
-}
-
-/* Transitions */
-.premise-tab-radio ~ .premise-tab-content.opacity > * {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	transition: all .4s ease-in-out;
 	opacity: 0;
 }
 
-.premise-tab-radio:checked ~ .premise-tab-content.opacity > * {
+.ptabs-content.ptabs-active {
 	opacity: 1;
-	transition: opacity 1s ease;
-}
-
-.premise-tab-radio ~ .premise-tab-content.translateX > * {
-	-webkit-transform: translateX(-100%);
-	        transform: translateX(-100%);
-}
-
-.premise-tab-radio:checked ~ .premise-tab-content.translateX > * {
-	-webkit-transform: translateX(0);
-	        transform: translateX(0);
-	transition: -webkit-transform 1s ease;
-	transition: transform 1s ease;
 }
 
 
-/* Responsive Tabs */
-@media screen and (max-width:767px) {
+/**
+ * Remove the following css before launch
+ */
+.ptabs-tabs-container {
 
-	/* Tabs 100% width */
-	.premise-tab {
-		width: 100% !important;
-	}
+}
 
-	.premise-tab-label {
-		display: block;
-	}
-
-	/* Remove selected tab arrow */
-	/*.premise-tab-radio:checked ~ .premise-tab-arrow:after {
-		border: 0;
-	}*/
-
+.ptabs-tab {
+	/*background: #fff;
+	color: #444;*/
+}
+.ptabs-tab:hover,
+.ptabs-tab.ptabs-active {
+	
 }
