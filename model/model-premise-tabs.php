@@ -61,7 +61,7 @@ class Premise_Tabs {
 
 	protected $options_defaults = array(
 		'wall' => 'top',
-
+		'content_in_tab' => false,
 	);
 
 
@@ -95,13 +95,14 @@ class Premise_Tabs {
 		if ( is_array( $tabs ) && ! empty( $tabs ) ) {
 			// check raw feature
 			$this->raw = is_bool( $raw ) ? $raw : $this->raw;
+			
+			$this->set_options( $params );
 
 			// save tabs into our object's tabs property
 			foreach ( $tabs as $k => $tab ) {
 				if ( is_array( $tab ) ) $this->tabs[] = wp_parse_args( $tab, $this->defaults );
 			}
 
-			$this->set_options( $params );
 			
 			$this->load_tabs();
 		}
@@ -115,7 +116,7 @@ class Premise_Tabs {
 	 */
 	public function load_tabs() {
 
-		$_html = $this->tabs_independent();
+		$_html = ( ! $this->options['content_in_tab'] ) ? $this->tabs_independent() : $this->tabs_together();
 
 		echo $_html;
 	}
@@ -156,7 +157,7 @@ class Premise_Tabs {
 
 				// Build the content 
 				$_cont .= '<div class="ptabs-content ptabs-content-' . $k . $cont_class . '">';
-					$_cont .= $tab['content'];
+					$_cont .= wpautop( wptexturize( $tab['content'] ) );
 				$_cont .= '</div>';
 			}
 		}
@@ -164,9 +165,17 @@ class Premise_Tabs {
 		$_tabs .= '</div>';
 		$_cont .= '</div>';
 
-		// $_html = '<div class="' . $this->wrapper_class() . '">' . $_tabs . $_cont . '</div>'
+		$_html = '<div class="' . $this->wrapper_class() . '">';
+			$_html .= ( 'top' == $this->options['wall'] ) ? $_tabs . $_cont : $_cont . $_tabs;
+		$_html .= '</div>';
 
-		return $_html = '<div class="' . $this->wrapper_class() . '">' . $_tabs . $_cont . '</div>';
+		return $_html;
+	}
+
+
+
+	public function tabs_together() {
+		# not ready yet
 	}
 
 
