@@ -44,7 +44,7 @@ new Premise_Tabs( $tabs, 'right' ); // displays tabs stacked on the right
 **The `raw` Feature:** The `raw` argument is the third argument this class takes and it is useful when
 you dont want any of the JavaScript or the css to load, none of it!  
 
-All you have to do is pass a boolean value `true` as your third parameter. This will avoid the class
+All you have to do is pass a boolean value `true` as your third argument. This will avoid the class
 `ptabs-wrapper` from being added, which will result in no CSS or JS firing, since all the CSS and JS is
 scoped to the `ptabs-wrapper` class.
 
