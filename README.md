@@ -121,14 +121,13 @@ Uses [Grunt](http://gruntjs.com/getting-started).
 
 # Changelog
 * **2.0.0:** Simplified the use of the Premise_Tabs to 3 arguments:
-	* Tabs: _Requied_ an array of arrays containing the information for each tab.  
-		```php  
-		array(
+	* Tabs: _Requied_ an array of arrays containing the information for each tab.
+		```array(
 			'title' => '',
 			'icon' => '',
 			'content' => '',
 		)  
-		```
+		```  
 	* Options: _Optional_ a string to add as class or array with options.
 	* Raw: _Optional_ a boolean value. true removes `ptabs-wrapper` class from main wrapper. Default if false
 
