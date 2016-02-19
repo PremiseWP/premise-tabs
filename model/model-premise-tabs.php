@@ -116,7 +116,7 @@ class Premise_Tabs {
 	 */
 	public function load_tabs() {
 
-		$_html = ( ! $this->options['content_in_tab'] ) ? $this->tabs_independent() : $this->tabs_together();
+		$_html = ( ! isset( $this->options['content_in_tab'] ) || ! $this->options['content_in_tab'] ) ? $this->tabs_independent() : $this->tabs_together();
 
 		echo $_html;
 	}
