@@ -256,18 +256,75 @@
 }
 
 
-/**
- * Remove the following css before launch
- */
-.ptabs-tabs-container {
-
+/* Left */
+.ptabs-wrapper.ptabs-left .ptabs-tabs-inner {
+	position: relative;
+	min-height: 400px;
 }
 
-.ptabs-tab {
-	/*background: #fff;
-	color: #444;*/
+.ptabs-wrapper.ptabs-left .ptabs-tabs-inner:after {
+	content: '';
+	display: block;
+	clear: both;
 }
-.ptabs-tab:hover,
-.ptabs-tab.ptabs-active {
+.ptabs-wrapper.ptabs-left .ptabs-tabs-ul {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: block;
+	width: 75%;
+	padding: 20px 0;
+}
+
+.ptabs-wrapper.ptabs-left .ptabs-tab-li {
+	width: 25%;
+	margin-left: -25%;
+	margin-bottom: 0;
+}
+
+.ptabs-wrapper.ptabs-left .ptabs-tab-li .ptabs-content {
 	
+}
+
+.ptabs-wrapper.ptabs-left .ptabs-tab-li .ptabs-content-inner {
+	max-height: 400px;
+	overflow: auto;
+	border-left: 1px solid #888;
+}
+
+
+/* Right */
+.ptabs-wrapper.ptabs-right .ptabs-tabs-inner {
+	position: relative;
+	min-height: 400px;
+}
+
+.ptabs-wrapper.ptabs-right .ptabs-tabs-inner:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+.ptabs-wrapper.ptabs-right .ptabs-tabs-ul {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 75%;
+	padding: 20px 0;
+}
+
+.ptabs-wrapper.ptabs-right .ptabs-tab-li {
+	width: 25%;
+	margin-left: 100%;
+	margin-bottom: 0;
+}
+
+.ptabs-wrapper.ptabs-right .ptabs-tab-li .ptabs-content {
+	
+}
+
+.ptabs-wrapper.ptabs-right .ptabs-tab-li .ptabs-content-inner {
+	max-height: 400px;
+	overflow: auto;
+	border-right: 1px solid #888;
 }
