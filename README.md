@@ -120,14 +120,9 @@ Uses [Grunt](http://gruntjs.com/getting-started).
 ======
 
 # Changelog
-* **2.0.0:** Simplified the use of the Premise_Tabs to 3 arguments:
-	* Tabs: _Requied_ an array of arrays containing the information for each tab.
-		```array(
-			'title' => '',
-			'icon' => '',
-			'content' => '',
-		)  
-		```  
-	* Options: _Optional_ a string to add as class or array with options.
-	* Raw: _Optional_ a boolean value. true removes `ptabs-wrapper` class from main wrapper. Default if false
+* **2.0.0:** Simplified the use of the Premise_Tabs class to 3 arguments:
+	* Tabs: _Requied_ array containing the information for each tab.
+	* Options: _Optional_ string to add as class or array with options.
+	* Raw: _Optional_ boolean true returns raw html. Default is false
+	* Added basic styles for 4 different "skins" - `top`, `bottom`, `left`, `right`.
 
