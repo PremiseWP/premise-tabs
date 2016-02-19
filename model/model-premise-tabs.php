@@ -157,7 +157,7 @@ class Premise_Tabs {
 
 				// Build the content 
 				$_cont .= '<div class="ptabs-content ptabs-content-' . $k . $cont_class . '">';
-					$_cont .= wpautop( wptexturize( $tab['content'] ) );
+					$_cont .= $this->get_content( $tab['content'] );
 				$_cont .= '</div>';
 			}
 		}
@@ -166,7 +166,7 @@ class Premise_Tabs {
 		$_cont .= '</div>';
 
 		$_html = '<div class="' . $this->wrapper_class() . '">';
-			$_html .= ( 'top' == $this->options['wall'] ) ? $_tabs . $_cont : $_cont . $_tabs;
+			$_html .= ( 'bottom' == $this->options['wall'] ) ? $_cont . $_tabs : $_tabs . $_cont;
 		$_html .= '</div>';
 
 		return $_html;
@@ -191,6 +191,16 @@ class Premise_Tabs {
 		$class .= isset( $this->options['wall'] ) && ! empty( $this->options['wall'] ) ? ' ' . 'ptabs-' . esc_attr( $this->options['wall'] ) : '';
 
 		return $class;
+	}
+
+
+
+	public function get_content( $content = '' ) {
+		$_html = '<div class="ptabs-content-inner">';
+		if ( is_string( $content ) && ! empty( $content ) )
+			$_html .= wpautop( wptexturize( $content ) );
+		$_html .= '</div>';
+		return $_html;
 	}
 
 
