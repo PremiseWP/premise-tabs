@@ -9,9 +9,9 @@ a bunch of code.
 ### The Basic Syntax
 
 This class accepts 3 arguments:  
-`$tabs` (required) - an array of arrays containing the tabs  
+`$tabs`    (required) - an array of arrays containing the tabs  
 `$options` (optional) - a string or array to define [options](#options)  
-`$raw` (optional) - boolean value, on false does not bind JS or CSS, default is true.
+`$raw`     (optional) - boolean value, on false does not bind JS or CSS, default is true.
 
 ```  
 new Premise_tabs( $tabs, 'top', false );
