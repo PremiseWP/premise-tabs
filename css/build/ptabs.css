@@ -201,6 +201,62 @@
 
 
 /**
+ * Tabs Together
+ */
+/* Top */
+.ptabs-wrapper.ptabs-top .ptabs-tabs-inner {}
+
+.ptabs-wrapper.ptabs-top .ptabs-tabs-ul {
+	position: relative;
+	border-bottom: 1px solid #888;
+	padding: 0 10px 0 10px;
+}
+
+.ptabs-wrapper.ptabs-top .ptabs-tab-li {
+	margin-bottom: 0;
+}
+
+.ptabs-wrapper.ptabs-top .ptabs-tab-li .ptabs-content {
+	top: 100%;
+}
+
+.ptabs-wrapper.ptabs-top .ptabs-tab-li .ptabs-content-inner {
+	max-height: 400px;
+	overflow: auto;
+}
+
+
+/* Bottom */
+.ptabs-wrapper.ptabs-bottom .ptabs-tabs-inner {
+	position: relative;
+	min-height: 400px;
+}
+
+.ptabs-wrapper.ptabs-bottom .ptabs-tabs-ul {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	border-top: 1px solid #888;
+	padding: 0 10px 0 10px;
+}
+
+.ptabs-wrapper.ptabs-bottom .ptabs-tab-li {
+	margin-bottom: 0;
+}
+
+.ptabs-wrapper.ptabs-bottom .ptabs-tab-li .ptabs-content {
+	top: 0;
+	margin-top: -400px;
+}
+
+.ptabs-wrapper.ptabs-bottom .ptabs-tab-li .ptabs-content-inner {
+	max-height: 400px;
+	overflow: auto;
+}
+
+
+/**
  * Remove the following css before launch
  */
 .ptabs-tabs-container {
