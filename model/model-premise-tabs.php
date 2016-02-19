@@ -175,7 +175,45 @@ class Premise_Tabs {
 
 
 	public function tabs_together() {
-		# not ready yet
+		$_tabs = '<div class="ptabs-tabs-inner">
+			<ul class="ptabs-tabs-ul">'; // begin with an clean tabs container
+
+		foreach ( $this->tabs as $k => $tab ) {
+			
+			if ( ( isset( $tab['title'] ) && ! empty( $tab['title'] ) ) 
+				&& ( isset( $tab['content'] ) && ! empty( $tab['content'] ) ) ) {
+				
+				$tab_class = ( isset( $tab['tab_class'] ) && ! empty( $tab['tab_class'] ) ) ? 
+					' ' . esc_attr( $tab['tab_class'] ) : '';
+				
+				// Build the tabs 
+				$_tabs .= '<li class="ptabs-tab ptabs-tab-' . $k . $tab_class . ' ptabs-tab-li" data-tab-index="' . $k . '">
+					<a href="javascript:;" class="ptabs-tab-a">';
+						// get icon whether is image or FA
+						$_tabs .= ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) ? $this->get_icon( $tab['icon'] ) : '';
+						$_tabs .= '<div class="ptabs-tab-title">' . $this->stripped_title( $tab['title'] ) . '</div>';
+					$_tabs .= '</a>';
+						
+						$cont_class = ( isset( $tab['content_class'] ) && ! empty( $tab['content_class'] ) ) ? 
+							' ' . esc_attr( $tab['content_class'] ) : '';
+
+						// Build the content 
+						$_tabs .= '<div class="ptabs-content ptabs-content-' . $k . $cont_class . '">';
+							$_tabs .= $this->get_content( $tab['content'] );
+						$_tabs .= '</div>';
+					
+				$_tabs .= '</li>';
+
+			}
+		}
+
+		$_tabs .= '</ul></div>';
+
+		$_html = '<div class="' . $this->wrapper_class() . '">';
+			$_html .= ( 'bottom' == $this->options['skin'] ) ? $_cont . $_tabs : $_tabs . $_cont;
+		$_html .= '</div>';
+
+		return $_html;
 	}
 
 
