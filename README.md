@@ -102,9 +102,6 @@ CSS with that class to ensure that it overrides the CSS from Premise Tabs.
 The `raw` argument is the third argument this class takes and it is useful when
 you dont want any of the JavaScript or the CSS to load, none of it!  
 
-By passsing a boolean value `true` as the third argument, `$raw`, you remove the `ptabs-wrapper` class
-from the main wrapper, hence, completely scrapping off the CSS and JS from Premise Tabs.  
-
 ```php
 new Premise_Tabs( $tabs, 'my_class', true );
 ```  
@@ -119,3 +116,19 @@ Now you can apply (not override) the css, this way:
 ```
 
 Uses [Grunt](http://gruntjs.com/getting-started).
+
+======
+
+# Changelog
+* **2.0.0:** Simplified the use of the Premise_Tabs to 3 arguments:
+	* Tabs: _Requied_ an array of arrays containing the information for each tab.
+		```php
+		array(
+			'title' => '',
+			'icon' => '',
+			'content' => '',
+		)
+		```
+	* Options: _Optional_ a string to add as class or array with options.
+	* Raw: _Optional_ a boolean value. true removes `ptabs-wrapper` class from main wrapper. Default if false
+
