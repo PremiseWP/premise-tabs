@@ -14,7 +14,8 @@ This class accepts 3 arguments:
 `$raw`     (optional) - boolean value, on false does not bind JS or CSS, default is true.
 
 ```  
-new Premise_tabs( $tabs, 'top', false );
+// Default arguments
+new Premise_tabs( array(), 'top', false );
 ```  
 
 To avoid loading unnecessary libraries this plugin uses its own JS code which you can expand on, or 
@@ -25,7 +26,7 @@ in any scenario where tabs could be necessary. By building the minimum amount of
 "base Markup" as we call it), we allow you to build on top of our code, rather than try to change it. 
 
 For example, if you want to change the CSS simply pass a class as your second argument and use it in your
-own code. [See an example here](#overriding-CSS). If you really want to go "Bare Bones" sort of speak, pass 
+own code. [See an example here](#overriding-css). If you really want to go "Bare Bones" sort of speak, pass 
 a third argument with a `boolean` value `true` and none of our CSS or JS will even load. You literally get 
 just the markup for the tabs. Do with it as you please. [See an example of this](#using-the-raw-feature)!  
 
@@ -74,7 +75,7 @@ Basically, when this option is used as a string it adds a class to the main wrap
 The class is always prefixed with `ptabs-`, so if you pass a class `my_class` you would reference it like this in 
 your CSS `.ptabs-my_class`.
 
-### Overriding CSS
+## Overriding CSS
 
 when using a custom class, like `my_class`, simply pass it as your second argument.
 
