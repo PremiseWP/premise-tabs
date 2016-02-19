@@ -29,7 +29,7 @@ For example, if you want to change the CSS simply pass a class as your second ar
 own code. [See an example here](#overriding-css). 
 
 If you really want to go "Bare Bones" sort of speak, pass 
-a third argument with a `boolean` value `true` and none of our CSS or JS will even load. You literally get 
+a third argument with a boolean value `true` and none of our CSS or JS will even load. You literally get 
 just the markup for the tabs. Do with it as you please. [See an example of this](#using-the-raw-feature)!  
 
 Example:
