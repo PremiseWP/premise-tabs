@@ -83,15 +83,17 @@ when using a custom class, like `my_class`, simply pass it as your second argume
 new Premise_Tabs( $tabs, 'my_class' );
 ```
 
-Then in your CSS, refernece it this way - All tabs by default have the class `.ptabs-wrapper` attached to
-their main wraopper `div` and all the CSS is scoped to that class. So it is safe to always prefix your
-CSS with that class to ensure that it overrides the CSS from Premise Tabs.
+Then in your CSS, refernce it this way: 
 
 ```CSS
 .ptabs-wrapper.ptabs-my_class {
 	/* all your CSS here will override the CSS from Premise Tabs */
 }
 ```
+
+**Note:** All tabs by default have the class `.ptabs-wrapper` attached to
+their main wraopper `div` and all the CSS is scoped to that class. So it is safe to always prefix your
+CSS with that class to ensure that it overrides the CSS from Premise Tabs.
 
 ### Using The Raw Feature
 
