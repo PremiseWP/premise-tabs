@@ -1,16 +1,20 @@
 # Premise Tabs plugin
 
-Easily build tabs markup and customize them for your own project.  
+Build tabs markup quikly and customize it for your own project.  
 
-This plugin builds the markup for responsive tabs with basic functionality. It is meant to be 
-basic so you can easily override or customize the tabs to your liking - without having to hack
-a bunch of code or load unnecessary scripts and libraries.  
+This plugin builds and outputs the markup for responsive tabs. It is meant to be extremely flexible
+yet basic; so you can easily override or customize the tabs to your liking - without having to hack
+a bunch of code. 
+
+To avoid loading unnecessary libraries this plugin uses its own JS code which you can expand on, or 
+completely prevent from running by passing a third argument with a boolean value of true.  
 
 This plugin is built for developers in the sense that is meant to be used with ease 
 in any scenario where tabs could be necessary. Building the minimum amount of markup necessary (or the 
-"base Markup" as we call it), we allow you build on top of our code, rather than try to change it. For
-example, if you want to change the CSS, simply pass a class as your second argument and use it in your
-own code. If you really want to go "bare bones" sort of speak, pass a third argument with a boolean value 
+"base Markup" as we call it), we allow you to build on top of our code, rather than try to change it. 
+
+For example, if you want to change the CSS simply pass a class as your second argument and use it in your
+own code. [See an example](#overriding-css) If you really want to go "bare bones" sort of speak, pass a third argument with a boolean value 
 true and none of our CSS or JS will even load. You literally get just the markup for the tabs. Do with it
 as you please.
 
