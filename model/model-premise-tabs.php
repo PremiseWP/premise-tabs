@@ -55,12 +55,12 @@ class Premise_Tabs {
 	 *
 	 * @var array
 	 */
-	protected $options = array('wall' => 'top');
+	protected $options = array('skin' => 'top');
 
 
 
 	protected $options_defaults = array(
-		'wall' => 'top',
+		'skin' => 'top',
 		'content_in_tab' => false,
 	);
 
@@ -166,7 +166,7 @@ class Premise_Tabs {
 		$_cont .= '</div>';
 
 		$_html = '<div class="' . $this->wrapper_class() . '">';
-			$_html .= ( 'bottom' == $this->options['wall'] ) ? $_cont . $_tabs : $_tabs . $_cont;
+			$_html .= ( 'bottom' == $this->options['skin'] ) ? $_cont . $_tabs : $_tabs . $_cont;
 		$_html .= '</div>';
 
 		return $_html;
@@ -188,7 +188,7 @@ class Premise_Tabs {
 		// begin with the main class if not raw
 		$class = $this->raw ? '' : 'ptabs-wrapper';
 
-		$class .= isset( $this->options['wall'] ) && ! empty( $this->options['wall'] ) ? ' ' . 'ptabs-' . esc_attr( $this->options['wall'] ) : '';
+		$class .= isset( $this->options['skin'] ) && ! empty( $this->options['skin'] ) ? ' ' . 'ptabs-' . esc_attr( $this->options['skin'] ) : '';
 
 		return $class;
 	}
@@ -255,7 +255,7 @@ class Premise_Tabs {
 
 	public function set_options( $params = '' ) {
 		if ( is_string( $params ) && ! empty( $params ) ) {
-			$this->options['wall'] = $params;
+			$this->options['skin'] = $params;
 		}
 		elseif ( is_array( $params ) ) {
 			$this->options = wp_parse_args( $params, $this->options_defaults );
