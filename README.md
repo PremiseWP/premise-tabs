@@ -3,14 +3,17 @@
 Build tabs markup quikly and customize it for your own project.  
 
 This plugin builds and outputs the markup for responsive tabs. It is meant to be extremely flexible
-yet basic; so you can easily override or customize the tabs to your liking - without having to hack
+yet basic so you can easily override or customize the tabs to your liking without having to hack
 a bunch of code. 
 
 ### The Basic Syntax
 
-This class accepts 3 arguments `$tabs` (required) - an array of arrays containing the tabs, `$options` 
-(optional) - a string or array to define [options](#options), `$raw` (optional) - boolean value, on 
-false does not bind JS or CSS, default is true.
+This class accepts 3 arguments:  
+`$tabs` (required) - an array of arrays containing the tabs  
+`$options` (optional) - a string or array to define [options](#options)  
+`$raw` (optional) - boolean value, on false does not bind JS or CSS, default is true.
+
+``new Premise_tabs( $tabs, 'top', false )``
 
 To avoid loading unnecessary libraries this plugin uses its own JS code which you can expand on, or 
 completely prevent from running by passing a third argument with a boolean value of true.  
