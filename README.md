@@ -26,7 +26,9 @@ in any scenario where tabs could be necessary. By building the minimum amount of
 "base Markup" as we call it), we allow you to build on top of our code, rather than try to change it. 
 
 For example, if you want to change the CSS simply pass a class as your second argument and use it in your
-own code. [See an example here](#overriding-css). If you really want to go "Bare Bones" sort of speak, pass 
+own code. [See an example here](#overriding-css). 
+
+If you really want to go "Bare Bones" sort of speak, pass 
 a third argument with a `boolean` value `true` and none of our CSS or JS will even load. You literally get 
 just the markup for the tabs. Do with it as you please. [See an example of this](#using-the-raw-feature)!  
 
@@ -83,7 +85,7 @@ when using a custom class, like `my_class`, simply pass it as your second argume
 new Premise_Tabs( $tabs, 'my_class' );
 ```
 
-Then in your CSS, refernce it this way: 
+Then in your CSS, reference it this way: 
 
 ```CSS
 .ptabs-wrapper.ptabs-my_class {
