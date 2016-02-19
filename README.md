@@ -121,7 +121,7 @@ Uses [Grunt](http://gruntjs.com/getting-started).
 
 # Changelog
 * **2.0.0:** Simplified the use of the Premise_Tabs to 3 arguments:
-	* Tabs: _Requied_ an array of arrays containing the information for each tab.
+	* Tabs: _Requied_ an array of arrays containing the information for each tab.  
 		```php
 		array(
 			'title' => '',
