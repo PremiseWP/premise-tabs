@@ -105,6 +105,8 @@ class Premise_Tabs {
 
 			
 			$this->load_tabs();
+
+        	remove_all_filters( 'ptabs_before_tabs' );
 		}
 	}
 
@@ -139,6 +141,8 @@ class Premise_Tabs {
 			
 			if ( ( isset( $tab['title'] ) && ! empty( $tab['title'] ) ) 
 				&& ( isset( $tab['content'] ) && ! empty( $tab['content'] ) ) ) {
+
+				$_tabs .= apply_filters( 'ptabs_before_tabs', '' );
 				
 				$tab_class = ( isset( $tab['tab_class'] ) && ! empty( $tab['tab_class'] ) ) ? 
 					' ' . esc_attr( $tab['tab_class'] ) : '';
