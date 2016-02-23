@@ -98,7 +98,7 @@ Then in your CSS, reference it like this:
 their main wrapper `div` and all the CSS is scoped to that class. So it is safe to always prefix your
 CSS with `.ptabs-wrapper` to ensure that it overrides the CSS from Premise Tabs.
 
-### Using The Raw Feature
+## Using The Raw Feature
 
 The `raw` argument is the third argument this class takes and it is useful when
 you dont want any of the JavaScript or the CSS to load, none of it!  
@@ -116,11 +116,84 @@ Now you can apply (not override) the css, this way:
 }
 ```
 
+## The Markup  
+
+By default, premise tabs outputs the markup for the tabs as follows:
+
+```html
+<div class="ptabs-wrapper ptabs-top">
+	<div class="ptabs-tabs-container">
+		<div class="ptabs-tab ptabs-tab-0 ptabs-active" data-tab-index="0">
+			<a href="javascript:;" class="ptabs-tab-a">
+				<div class="ptabs-tab-icon">
+					<i class="fa fa-plus"></i>
+				</div>
+				<div class="ptabs-tab-title">
+					Tab 1
+				</div>
+			</a>
+		</div>
+		<!-- More Tabs load here... -->
+	</div>
+	<div class="ptabs-content-container">
+		<div class="ptabs-content ptabs-content-0 ptabs-active">
+			<div class="ptabs-content-inner">
+				# Content for Tab 1 Goes here
+			</div>
+		</div>
+		<!-- Content for other tabs loads here... -->
+	</div>
+</div>
+```  
+
+As you can see the markup is created with the tabs and content in separate divs. We think this approach
+is easier to work with, especially in responsive. 
+
+To display the content inside the tabs, pass `content_in_tab => true` as part of your arguments array for
+the second argument. Here is an example:  
+
+```php
+/**
+ * insert tabs with the content inside the tabs
+ */
+new Premise_Tabs( $tabs, array(
+	'skin' => 'top',           // Optional, defaults to 'top'
+	'content_in_tab' => true  // When true puts content in tab. Defaults to false
+) );
+```  
+
+The code above will output the content inside the tabs and will output the tabs as `<li>` elements. Here is how that markup looks like:  
+
+```html
+<div class="ptabs-wrapper ptabs-top">
+	<div class="ptabs-tabs-inner">
+		<ul class="ptabs-tabs-ul">
+			<li class="ptabs-tab ptabs-tab-0 ptabs-tab-li ptabs-active" data-tab-index="0">
+				<a href="javascript:;" class="ptabs-tab-a">
+					<div class="ptabs-tab-icon">
+						<i class="fa fa-plus"></i>
+					</div>
+					<div class="ptabs-tab-title">
+						Tab 1
+					</div>
+				</a>
+				<div class="ptabs-content ptabs-content-0 ptabs-active">
+					<div class="ptabs-content-inner">
+						# Content for tab1 goes here
+					</div>
+				</div>
+			</li>
+			<!-- More Tabs load here... -->
+		</ul>
+	</div>
+</div>
+```
+
 Uses [Grunt](http://gruntjs.com/getting-started).
 
 ======
 
-# Changelog
+### Changelog
 * **2.0.0:** Simplified the use of the Premise_Tabs class to 3 arguments:
 	* Tabs: _Requied_ array containing the information for each tab.
 	* Options: _Optional_ string to add as skin or array with options.
