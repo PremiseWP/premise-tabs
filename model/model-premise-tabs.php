@@ -236,7 +236,7 @@ class Premise_Tabs {
 	public function get_content( $content = '' ) {
 		$_html = '<div class="ptabs-content-inner">';
 		if ( is_string( $content ) && ! empty( $content ) )
-			$_html .= wpautop( wptexturize( $content ) );
+			$_html .= $content;
 		$_html .= '</div>';
 		return $_html;
 	}
