@@ -53,6 +53,7 @@
 	overflow: hidden;
 	height: 0;
 	opacity: 0;
+	box-sizing: border-box;
 }
 
 .premise-tab-radio:checked ~ .premise-tab-label {
@@ -91,14 +92,11 @@
 }
 
 .premise-tab-radio ~ .premise-tab-content.translateX > * {
-	-webkit-transform: translateX(-100%);
-	        transform: translateX(-100%);
+	transform: translateX(-100%);
 }
 
 .premise-tab-radio:checked ~ .premise-tab-content.translateX > * {
-	-webkit-transform: translateX(0);
-	        transform: translateX(0);
-	transition: -webkit-transform 1s ease;
+	transform: translateX(0);
 	transition: transform 1s ease;
 }
 

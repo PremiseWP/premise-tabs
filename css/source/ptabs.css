@@ -53,6 +53,7 @@
 	overflow: hidden;
 	height: 0;
 	opacity: 0;
+	box-sizing: border-box;
 }
 
 .premise-tab-radio:checked ~ .premise-tab-label {
