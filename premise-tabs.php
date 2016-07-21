@@ -2,7 +2,12 @@
 /**
  * Plugin Name: Premise Tabs
  * Description: Responsive CSS Tabs. Premise-WP add-on.
+<<<<<<< HEAD
  * Version:     1.0.0
+=======
+ * Plugin URI:
+ * Version:     2.0.1
+>>>>>>> tabsV2
  * Author:      Vallgroup LLC
  * Author URI:  http://vallgroup.com
  * Plugin URI:  https://github.com/PremiseWP/premise-tabs

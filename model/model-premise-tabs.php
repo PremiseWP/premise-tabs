@@ -11,35 +11,58 @@
 /**
  * Premise Tabs Class
  *
- * @example $tabs = new Premise_Tabs();
- *          ob_start();
- *          $tabs->set_tab( '<div class="premise-row">' . ob_get_clean() . '</div>', __( 'Menus', 'vmenu' ), 'fa-cutlery' );
- *          $tabs->tabs_output();
+ * This class is supposed to do one thing well - output markup for tabs.
+ * That means that this class is meant to provide developers with the markup
+ * necessary for creating tabs, but should let the developer control functionality and
+ * styles. Of course, by default this class outputs working tabs with basic styles and
+ * fucntionality, but the idea is that they can be easily overridden or customized.
+ *
+ * @example $tabs = array(
+ *          	array(
+ *          		'title'   => 'Tab 1',
+ *          		'content' => 'HTML for content here..',
+ *          	),
+ *          	array(..
+ *          );
+ *          new Premise_Tabs( $tabs, 'top' );
  */
 class Premise_Tabs {
 
 	/**
-	 * The defaults
+	 * The defaults for each tab
 	 *
 	 * @see constructor
 	 *
 	 * @var array
 	 */
-	var $defaults = array(
-		'tabs-label-display' => 'inline', // Options: 'block'.
-		'transition' => 'none', // Options: 'opacity'|'translateX'.
-		'selected-tab-arrow' => false, // Options: true|false.
+	protected $defaults = array(
+		'title' => '', 
+		'icon' => '', 
+		'content' => '', 
 	);
 
 
 	/**
-	 * The options
+	 * The options.
+	 *
+	 * For ease of use, the options argument can be a string
+	 * simply containing the location of where to place the tabs.
+	 * This argument defaults to 'top'. An array can also be passed
+	 * as the second argument to give you more control - further documentation
+	 * in the constructor function.
 	 *
 	 * @see constructor
 	 *
 	 * @var array
 	 */
-	var $options = array();
+	protected $options = array('skin' => 'top');
+
+
+
+	protected $options_defaults = array(
+		'skin' => 'top',
+		'content_in_tab' => false,
+	);
 
 
 	/**
@@ -47,23 +70,19 @@ class Premise_Tabs {
 	 *
 	 * @var array
 	 */
-	var $tab = array();
+	protected $tabs = array();
+
+
+
+	public $raw = false;
 
 
 	/**
-	 * The tab group counter
-	 *
-	 * @var integer
+	 * html tags allowed in the tabs title
+	 * 
+	 * @var string
 	 */
-	static $tab_group_counter = 1;
-
-
-	/**
-	 * The tab group
-	 *
-	 * @var integer
-	 */
-	var $tab_group;
+	protected $allowed_title_tags = '<h1>,<h2>,<h3>,<h4>,<h5>,<h6>,<p>,<span>,<br>';
 
 
 	/**
@@ -71,185 +90,221 @@ class Premise_Tabs {
 	 *
 	 * @param array $options Tabs options.
 	 */
-	public function __construct( $options = array() ) {
+	public function __construct( $tabs = array(), $params = '', $raw = false ) {
 
-		$this->tab_group = Premise_Tabs::$tab_group_counter++;
+		if ( is_array( $tabs ) && ! empty( $tabs ) ) {
+			// check raw feature
+			$this->raw = is_bool( $raw ) ? $raw : $this->raw;
+			
+			$this->set_options( $params );
 
-		$this->options = array_replace_recursive( $this->defaults, (array) $options );
+			// save tabs into our object's tabs property
+			foreach ( $tabs as $k => $tab ) {
+				if ( is_array( $tab ) ) $this->tabs[] = wp_parse_args( $tab, $this->defaults );
+			}
+
+			
+			$this->load_tabs();
+
+        	remove_all_filters( 'ptabs_before_tabs' );
+		}
+	}
+
+
+	/**
+	 * loads the tabs
+	 * 
+	 * @return string outputs the html for the tabs
+	 */
+	public function load_tabs() {
+
+		$_html = ( ! isset( $this->options['content_in_tab'] ) || ! $this->options['content_in_tab'] ) ? $this->tabs_independent() : $this->tabs_together();
+
+		echo $_html;
 	}
 
 
 
 	/**
-	 * Set Tab
+	 * Prints out tabs separate from the content.
 	 *
-	 * @example $tabs->set_tab( '<div class="premise-row">' . ob_get_clean() . '</div>', __( 'Menus', 'vmenu' ), 'fa-cutlery' );
-	 *
-	 * @param string $tab_content Tab Content HTML.
-	 * @param string $title       Tab Title.
-	 * @param string $icon        Tab Icon: Font Awesome (eg. 'fa-twitter'), or image src. Optional.
+	 * Both tabs and contents are output in separate containers within
+	 * one wrapper container.
+	 * 
+	 * @return string html for tabs
 	 */
-	public function set_tab( $tab_content, $title, $icon = '' ) {
+	public function tabs_independent() {
+		$_tabs = '<div class="ptabs-tabs-container">'; // begin with an clean tabs container
+		$_cont = '<div class="ptabs-content-container">'; // begin with an clean contents container
 
-		$this->tab[] = array(
-			'content' => (string) $tab_content,
-			'title' => (string) $title,
-			'icon' => (string) $icon,
-		);
-	}
+		foreach ( $this->tabs as $k => $tab ) {
+			
+			if ( ( isset( $tab['title'] ) && ! empty( $tab['title'] ) ) 
+				&& ( isset( $tab['content'] ) && ! empty( $tab['content'] ) ) ) {
 
+				$_tabs .= apply_filters( 'ptabs_before_tabs', '' );
+				
+				$tab_class = ( isset( $tab['tab_class'] ) && ! empty( $tab['tab_class'] ) ) ? 
+					' ' . esc_attr( $tab['tab_class'] ) : '';
+				
+				// Build the tabs 
+				$_tabs .= '<div class="ptabs-tab ptabs-tab-' . $k . $tab_class . '" data-tab-index="' . $k . '">
+					<a href="javascript:;" class="ptabs-tab-a">';
+						// get icon whether is image or FA
+						$_tabs .= ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) ? $this->get_icon( $tab['icon'] ) : '';
+						$_tabs .= '<div class="ptabs-tab-title">' . $this->stripped_title( $tab['title'] ) . '</div>';
+					$_tabs .= '</a>
+				</div>';
 
+				$cont_class = ( isset( $tab['content_class'] ) && ! empty( $tab['content_class'] ) ) ? 
+					' ' . esc_attr( $tab['content_class'] ) : '';
 
-	/**
-	 * Tabs Output
-	 *
-	 * @uses Premise_Tabs::get_tabs()
-	 */
-	public function tabs_output() {
-
-		echo $this->get_tabs();
-	}
-
-
-	/**
-	 * Get Tabs
-	 *
-	 * @uses Premise_Tabs::get_tab()
-	 *
-	 * @return string Tabs HTML or empty string if no tabs
-	 */
-	public function get_tabs() {
-
-		$number_tabs = count( $this->tab );
-
-		if ( $number_tabs < 1 ) {
-
-			return '';
+				// Build the content 
+				$_cont .= '<div class="ptabs-content ptabs-content-' . $k . $cont_class . '">';
+					$_cont .= $this->get_content( $tab['content'] );
+				$_cont .= '</div>';
+			}
 		}
 
-		ob_start();	?>
+		$_tabs .= '</div>';
+		$_cont .= '</div>';
 
-		<ul class="premise-tabs premise-tabs-<?php echo esc_attr( $this->tab_group ); ?> premise-clear">
+		$_html = '<div class="' . $this->wrapper_class() . '">';
+			$_html .= ( 'bottom' == $this->options['skin'] ) ? $_cont . $_tabs : $_tabs . $_cont;
+		$_html .= '</div>';
 
-		<?php
-		for ( $tab_number = 0; $tab_number < $number_tabs; $tab_number++ ) {
+		return $_html;
+	}
 
-			// Generate each tab.
-			echo $this->get_tab( $tab_number );
-		} ?>
 
-		</ul><!-- /premise-tabs -->
 
-		<?php return ob_get_clean();
+	public function tabs_together() {
+		$_tabs = '<div class="ptabs-tabs-inner">
+			<ul class="ptabs-tabs-ul">'; // begin with an clean tabs container
+
+		foreach ( $this->tabs as $k => $tab ) {
+			
+			if ( ( isset( $tab['title'] ) && ! empty( $tab['title'] ) ) 
+				&& ( isset( $tab['content'] ) && ! empty( $tab['content'] ) ) ) {
+				
+				$tab_class = ( isset( $tab['tab_class'] ) && ! empty( $tab['tab_class'] ) ) ? 
+					' ' . esc_attr( $tab['tab_class'] ) : '';
+				
+				// Build the tabs 
+				$_tabs .= '<li class="ptabs-tab ptabs-tab-' . $k . $tab_class . ' ptabs-tab-li" data-tab-index="' . $k . '">
+					<a href="javascript:;" class="ptabs-tab-a">';
+						// get icon whether is image or FA
+						$_tabs .= ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ) ? $this->get_icon( $tab['icon'] ) : '';
+						$_tabs .= '<div class="ptabs-tab-title">' . $this->stripped_title( $tab['title'] ) . '</div>';
+					$_tabs .= '</a>';
+						
+						$cont_class = ( isset( $tab['content_class'] ) && ! empty( $tab['content_class'] ) ) ? 
+							' ' . esc_attr( $tab['content_class'] ) : '';
+
+						// Build the content 
+						$_tabs .= '<div class="ptabs-content ptabs-content-' . $k . $cont_class . '">';
+							$_tabs .= $this->get_content( $tab['content'] );
+						$_tabs .= '</div>';
+					
+				$_tabs .= '</li>';
+
+			}
+		}
+
+		$_tabs .= '</ul></div>';
+
+		$_html = '<div class="' . $this->wrapper_class() . '">';
+			$_html .= ( 'bottom' == $this->options['skin'] ) ? $_cont . $_tabs : $_tabs . $_cont;
+		$_html .= '</div>';
+
+		return $_html;
+	}
+
+
+	/**
+	 * returns all the wrapper classes
+	 * 
+	 * @return string wrapper applicable classes
+	 */
+	public function wrapper_class() {
+		// begin with the main class if not raw
+		$class = $this->raw ? '' : 'ptabs-wrapper';
+
+		$class .= isset( $this->options['skin'] ) && ! empty( $this->options['skin'] ) ? ' ' . 'ptabs-' . esc_attr( $this->options['skin'] ) : '';
+
+		return $class;
+	}
+
+
+
+	public function get_content( $content = '' ) {
+		$_html = '<div class="ptabs-content-inner">';
+		if ( is_string( $content ) && ! empty( $content ) )
+			$_html .= $content;
+		$_html .= '</div>';
+		return $_html;
 	}
 
 
 
 	/**
-	 * Tab
+	 * returns the icon as image or FontAwesome icon
 	 *
-	 * @see  https://css-tricks.com/examples/CSSTabs/radio.php
-	 * @see  http://www.onextrapixel.com/2013/07/31/creating-content-tabs-with-pure-css/
-	 *
-	 * @uses Premise_Tabs::get_tab_header()
-	 * @uses Premise_Tabs::get_tab_footer()
-	 *
-	 * @param  integer $tab_number Tab Number.
-	 *
-	 * @return string Tab HTML or empty string if tab does not exist
+	 * Uses regexp ti identify it the icon is an image or an fa icon then pricess it 
+	 * accordingly.
+	 * 
+	 * @param  string $icon FontAwesome icon class i.e. fa-plus. or image url to use as icon
+	 * @return string       html for tab icon if it is img url or FontAwesome icon. empty string otherwise
 	 */
-	public function get_tab( $tab_number ) {
+	public function get_icon( $icon = '' ) {
+		$_html = '';
+		if ( ! empty( $icon ) ) {
+			$_html = '<div class="ptabs-tab-icon">';
+				
+				if ( preg_match('/.*\.png|jpg|jpeg|gif/i', $icon, $match ) ) {
+					$_html .= '<img src="' . esc_url( $icon ) . '" class="premise-responsive">';
+				}
+				elseif ( preg_match('/^fa-/i', $icon, $match ) ) {
+					$_html .= '<i class="fa ' . esc_attr( strtolower( $icon ) ) . '"></i>';
+				}
+				else {
+					$_html .= '';
+				}
 
-		if ( ! isset( $this->tab[ (int) $tab_number ] ) ) {
-
-			return '';
+			$_html .= '</div>';
 		}
-
-		$tab = $this->get_tab_header( $tab_number );
-
-		$tab .= $this->tab[ $tab_number ]['content'];
-
-		$tab .= $this->get_tab_footer( $tab_number );
-
-		return $tab;
+		return $_html;
 	}
 
 
 
 	/**
-	 * Tab Header
+	 * returns the title tab stripped
 	 *
-	 * @see  https://css-tricks.com/examples/CSSTabs/radio.php
-	 *
-	 * @param  integer $tab_number Tab Number.
-	 *
-	 * @return string Tab Header HTML or empty string if tab does not exist
+	 * @see Premise_Tabs::allowed_title_tags for a list allowed tags
+	 * 
+	 * @param  string $title title to strip tags from
+	 * @return string        title stripped.
 	 */
-	public function get_tab_header( $tab_number ) {
-
-		if ( ! isset( $this->tab[ (int) $tab_number ] ) ) {
-
-			return '';
-		}
-
-		$tab = $this->tab[ (int) $tab_number ];
-
-		$checked = '';
-
-		if ( 0 === (int) $tab_number ) {
-
-			$checked = ' checked';
-		}
-
-		$number_tabs = count( $this->tab );
-
-		$block = $this->options['tabs-label-display'] === 'block' ? ' premise-block' : '';
-
-		$transition = $this->options['transition'];
-
-		$arrow = $this->options['selected-tab-arrow'] ? ' premise-tab-arrow' : '';
-
-		ob_start(); ?>
-
-		<li class="premise-tab"<?php echo $block ? ' style="width: ' . esc_attr( 100 / $number_tabs ) . '%"' : ''; ?>>
-			<input type="radio"<?php echo esc_attr( $checked ); ?> name="premise-tab-group-<?php echo sanitize_html_class( $this->tab_group ); ?>" id="premise-tab<?php echo esc_attr( $tab_number ); ?>" class="premise-tab-radio">
-			<label for="premise-tab<?php echo esc_attr( $tab_number ); ?>" class="premise-tab-label<?php echo wp_kses_data( $block . $arrow ); ?>">
-			<?php if ( strpos( $tab['icon'], 'fa-' ) === 0 ) : ?>
-				<i class="fa <?php echo esc_attr( $tab['icon'] ); ?>"></i>
-			<?php elseif ( $tab['icon'] ) : // Image src. ?>
-				<img src="<?php echo esc_attr( $tab['icon'] ); ?>" />
-			<?php endif; ?>
-				<?php echo esc_html( $tab['title'] ); ?>
-			</label>
-
-			<div id="premise-tab-content<?php echo esc_attr( $tab_number ); ?>" class="premise-tab-content <?php echo wp_kses_data( $transition ); ?>">
-
-		<?php return ob_get_clean();
+	public function stripped_title( $title = '' ) {
+		if ( ! empty( $title ) )
+			return strip_tags( (string) $title, $this->allowed_title_tags );
+		return '';
 	}
 
 
 
-	/**
-	 * Tab Footer
-	 *
-	 * @see  https://css-tricks.com/examples/CSSTabs/radio.php
-	 *
-	 * @param  integer $tab_number Tab Number.
-	 *
-	 * @return string Tab Header HTML or empty string if tab does not exist
-	 */
-	public function get_tab_footer( $tab_number ) {
 
-		if ( ! isset( $this->tab[ (int) $tab_number ] ) ) {
-
-			return '';
+	public function set_options( $params = '' ) {
+		if ( is_string( $params ) && ! empty( $params ) ) {
+			$this->options['skin'] = $params;
 		}
-
-		ob_start(); ?>
-
-			</div><!-- /premise-tab-content -->
-		</li><!-- /premise-tab -->
-
-		<?php return ob_get_clean();
+		elseif ( is_array( $params ) ) {
+			$this->options = wp_parse_args( $params, $this->options_defaults );
+		}
 	}
+
+
+
+	
 }

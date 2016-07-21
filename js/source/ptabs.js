@@ -5,48 +5,36 @@
  */
 (function ($) {
 
-	// OnLoad.
-	$(function() {
-		PremiseTabsHeight( false );
-
-		$( '.premise-tab-radio' ).click( function() { PremiseTabsHeight( false ); } );
+	$(document).ready(function(){
+		if ( 0 < $('.ptabs-wrapper').length ) $('.ptabs-wrapper').premiseTabs();
 	});
 
-	// On resize.
-	$( window ).resize(function() {
-		PremiseTabsHeight( true );
-	});
+	$.fn.premiseTabs = function() {
+		
+		var tabs = this.find('.ptabs-tab'),
+		tab = this.find('.ptabs-tab a'),
+		activeTab = this.find('.ptabs-tab.ptabs-active');
 
-	function PremiseTabsHeight( resize ) {
-
-		if ( typeof PremiseTabsHeight.tabsheight == 'undefined' || resize ) {
-
-			PremiseTabsHeight.tabsheight = $( '.premise-tab-label' ).outerHeight(); // Static var.
-
-			// Tabs 100% width
-			if ( screen.width < 768 ) {
-
-				PremiseTabsHeight.tabsheight *= $( '.premise-tab-label' ).length;
-			}
-
-			var tabcontenttop = PremiseTabsHeight.tabsheight;
-
-			// Set content top offset.
-			if ( $( '.premise-tab-label' ).css( 'display' ) !== 'block' ) { // If inline tabs.
-
-				tabcontenttop -= parseInt( $( '.premise-tabs' ).css( 'margin-top' ), 10 );
-			}
-
-			$( '.premise-tab-content' ).css( 'top', tabcontenttop + 'px' );
+		// If no active tabs set the first one as active
+		if ( 0 == activeTab.length ) {
+			tabs.first().addClass('ptabs-active');
+			activeTab = tabs.first();
 		}
 
-		var contentheight = $( '.premise-tab-radio:checked ~ .premise-tab-content' ).height(),
-			height = contentheight + PremiseTabsHeight.tabsheight;
+		showContent( activeTab.attr('data-tab-index') );
+		
+		tab.click(function(){
+			tabs.removeClass('ptabs-active');
+			$(this).parent('.ptabs-tab').addClass('ptabs-active');
+			$(this).parents('.ptabs-wrapper').find('.ptabs-content').removeClass('ptabs-active');
+			showContent( $(this).parent('.ptabs-tab').attr('data-tab-index') );
+		});
 
-		// Set content min-height.
-		$( '.premise-tabs' ).css( 'min-height', height + 'px' );
 
-		return false;
+		function showContent(index) {
+			var activeContent = index ? $('.ptabs-content-'+index) : null;
+			null !== activeContent ? activeContent.addClass('ptabs-active') : false;
+		}
 	}
 
 })(jQuery);
