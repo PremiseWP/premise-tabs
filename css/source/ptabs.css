@@ -33,7 +33,7 @@
 	border-radius: inherit;
 }
 .ptabs-wrapper .ptabs-tab.ptabs-active,
-.ptabs-wrapper .ptabs-tab-a:focus, 
+.ptabs-wrapper .ptabs-tab-a:focus,
 .ptabs-wrapper .ptabs-tab:hover {
 	background: #fff;
 	color: inherit;
@@ -290,7 +290,7 @@
 }
 
 .ptabs-wrapper.ptabs-left .ptabs-tab-li .ptabs-content {
-	
+
 }
 
 .ptabs-wrapper.ptabs-left .ptabs-tab-li .ptabs-content-inner {
@@ -327,7 +327,7 @@
 }
 
 .ptabs-wrapper.ptabs-right .ptabs-tab-li .ptabs-content {
-	
+
 }
 
 .ptabs-wrapper.ptabs-right .ptabs-tab-li .ptabs-content-inner {
