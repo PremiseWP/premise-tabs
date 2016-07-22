@@ -335,3 +335,13 @@
 	overflow: auto;
 	border-right: 1px solid #888;
 }
+
+
+
+/**
+ * Admin.
+ */
+.premise-admin,
+.premise-admin p {
+	font-size: 20px;
+}
