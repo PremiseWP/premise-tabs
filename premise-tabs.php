@@ -20,7 +20,6 @@ define( 'PTABS_URL', plugin_dir_url( __FILE__ ) );
 
 
 
-
 // Instantiate our main class and setup Premise Tabs
 // Must use 'plugins_loaded' hook.
 add_action( 'plugins_loaded', array( Load_Premise_Tabs::get_instance(), 'ptabs_setup' ) );

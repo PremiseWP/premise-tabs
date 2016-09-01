@@ -1,6 +1,6 @@
 /**
  * Plugin JS
- * 
+ *
  * @package Premise Tabs
  */
 (function ($) {
@@ -10,7 +10,7 @@
 	});
 
 	$.fn.premiseTabs = function() {
-		
+
 		var tabs = this.find('.ptabs-tab'),
 		tab = this.find('.ptabs-tab a'),
 		activeTab = this.find('.ptabs-tab.ptabs-active');
@@ -22,7 +22,7 @@
 		}
 
 		showContent( activeTab.attr('data-tab-index') );
-		
+
 		tab.click(function(){
 			tabs.removeClass('ptabs-active');
 			$(this).parent('.ptabs-tab').addClass('ptabs-active');

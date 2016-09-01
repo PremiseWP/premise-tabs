@@ -1,5 +1,7 @@
 # Premise Tabs plugin
 
+**This plugin has been deprecated and this class is now been maintained within Premise WP.**
+
 Build tabs markup quickly and customize it for your own project.
 
 This plugin builds and outputs the markup for responsive tabs. It is meant to be extremely flexible
