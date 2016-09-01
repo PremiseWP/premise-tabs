@@ -8,6 +8,8 @@
  * Author URI:  http://vallgroup.com
  * License:     GPL
  *
+ * @deprecated 2.0.1  This plugin was moved into premise wp.
+ *
  * @package Premise Tabs
  */
 
